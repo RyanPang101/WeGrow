@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeGrow - Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #8BC34A;
+            --accent: #FFC107;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --gray: #757575;
+            --light-gray: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fdf7;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary);
+        }
+
+        button,
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover,
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* ===== Header & Navbar ===== */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            z-index: 101;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* remove underline effect */
+        .nav-links a::after {
+            content: none;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn {
+            background: none;
+            color: var(--primary);
+            margin-right: 15px;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .signup-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-dark);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 var(--radius) var(--radius);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-links li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-links li:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav-links a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--white);
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .mobile-auth-buttons {
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-login-btn {
+            background: none;
+            color: var(--white);
+            border: 1px solid var(--white);
+            padding: 10px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .mobile-signup-btn {
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 10px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            width: 100%;
+            border: none;
+        }
+
+        /* Messaging Container */
+        .messaging-container {
+            display: flex;
+            flex: 1;
+            background-color: var(--white);
+            margin: 20px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Conversations Sidebar */
+        .conversations-sidebar {
+            width: 350px;
+            border-right: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .sidebar-header h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .search-conversations {
+            display: flex;
+        }
+
+        .search-conversations input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: 1rem;
+        }
+
+        .search-conversations button {
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .conversation-item:hover,
+        .conversation-item.active {
+            background-color: var(--light);
+        }
+
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .conversation-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .online-status {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary);
+            border: 2px solid var(--white);
+            border-radius: 50%;
+        }
+
+        .offline {
+            background-color: var(--gray);
+        }
+
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .conversation-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .conversation-time {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .conversation-preview {
+            font-size: 0.9rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unread-count {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--gray);
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .chat-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .chat-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-user-info h3 {
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .chat-user-info p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .chat-options button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-options button:hover {
+            color: var(--primary);
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            display: flex;
+            max-width: 70%;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            margin-right: 10px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message.sent .message-avatar {
+            display: none;
+        }
+
+        .message-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-bubble {
+            padding: 12px 15px;
+            border-radius: 18px;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .message.received .message-bubble {
+            background-color: var(--white);
+            border: 1px solid var(--light-gray);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.sent .message-bubble {
+            background-color: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--gray);
+            align-self: flex-end;
+        }
+
+        .message.sent .message-time {
+            color: var(--primary-dark);
+        }
+
+        .message-input-area {
+            padding: 15px 20px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            resize: none;
+            height: 50px;
+        }
+
+        .special-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .special-buttons button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .special-buttons button:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .send-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .send-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+                order: 2;
+                /* This moves the hamburger to the right */
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .conversations-sidebar {
+                position: fixed;
+                left: -350px;
+                top: 0;
+                bottom: 0;
+                z-index: 1000;
+                background-color: var(--white);
+                transition: left 0.3s;
+                box-shadow: var(--shadow);
+            }
+
+            .conversations-sidebar.active {
+                left: 0;
+            }
+
+            .back-button {
+                display: block;
+            }
+
+            /* Center logo only in mobile view */
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            /* Adjust navbar to properly position hamburger on right */
+            .navbar {
+                justify-content: flex-end;
+                /* Push items to the edges */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                max-width: 85%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .message-input-area {
+                padding: 10px;
+            }
+
+            .special-buttons {
+                display: none;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="plant-listings.html">Listings</a></li>
+                    <li><a href="messaging.html" class="active">Messages</a></li>
+                    <li><a href="guides.html">Guides</a></li>
+                    <li><a href="quest.html">Quests</a></li>
+                    <li><a href="rewards-store.html">Store</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+
+                <div class="auth-buttons">
+                    <button class="login-btn" onclick="location.href='authentication.html'">Log In</button>
+                    <button class="signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <ul class="mobile-nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html" class="active">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quest.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                    <div class="mobile-auth-buttons">
+                        <button class="mobile-login-btn" onclick="location.href='authentication.html'">Log In</button>
+                        <button class="mobile-signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay"></div>
+
+    <!-- Messaging Container -->
+    <div class="container">
+        <div class="messaging-container">
+            <!-- Conversations Sidebar -->
+            <div class="conversations-sidebar">
+                <div class="sidebar-header">
+                    <h2>Messages</h2>
+                    <div class="search-conversations">
+                        <input type="text" placeholder="Search conversations...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="conversations-list">
+                    <!-- Conversation 1 -->
+                    <div class="conversation-item active" data-user="Sarah Green" data-status="online">
+                        <div class="conversation-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status"></div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header">
+                                <div class="conversation-name">Sarah Green</div>
+                                <div class="conversation-time">10:42 AM</div>
+                            </div>
+                            <div class="conversation-preview">I use a compost tea that I make myself. I can share the
+                                recipe if you're interested!</div>
+                        </div>
+                        <div class="unread-count" style="display: none;">0</div>
+                    </div>
+
+                    <!-- Conversation 2 -->
+                    <div class="conversation-item" data-user="Mike Gardener" data-status="offline">
+                        <div class="conversation-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status offline"></div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header">
+                                <div class="conversation-name">Mike Gardener</div>
+                                <div class="conversation-time">Yesterday</div>
+                            </div>
+                            <div class="conversation-preview">When can I pick up the basil cuttings?</div>
+                        </div>
+                        <div class="unread-count" style="display: none;">0</div>
+                    </div>
+
+                    <!-- Conversation 3 -->
+                    <div class="conversation-item" data-user="Lisa Plantlover" data-status="online">
+                        <div class="conversation-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status"></div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header">
+                                <div class="conversation-name">Lisa Plantlover</div>
+                                <div class="conversation-time">Wednesday</div>
+                            </div>
+                            <div class="conversation-preview">I found the snake plant you were looking for!</div>
+                        </div>
+                        <div class="unread-count">1</div>
+                    </div>
+
+                    <!-- Conversation 4 -->
+                    <div class="conversation-item" data-user="David Greensmith" data-status="offline">
+                        <div class="conversation-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status offline"></div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header">
+                                <div class="conversation-name">David Greensmith</div>
+                                <div class="conversation-time">Monday</div>
+                            </div>
+                            <div class="conversation-preview">Do you have any gardening tips for beginners?</div>
+                        </div>
+                        <div class="unread-count" style="display: none;">0</div>
+                    </div>
+
+                    <!-- Conversation 5 -->
+                    <div class="conversation-item" data-user="Anna Nature" data-status="online">
+                        <div class="conversation-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status"></div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header">
+                                <div class="conversation-name">Anna Nature</div>
+                                <div class="conversation-time">Last week</div>
+                            </div>
+                            <div class="conversation-preview">I have lavender seeds if you're still interested</div>
+                        </div>
+                        <div class="unread-count">2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-header">
+                    <div class="chat-user">
+                        <button class="back-button">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="chat-user-avatar">
+                            <i class="fas fa-user"></i>
+                            <div class="online-status"></div>
+                        </div>
+                        <div class="chat-user-info">
+                            <h3 class="current-user-name">Sarah Green</h3>
+                            <p class="current-user-status">Online</p>
+                        </div>
+                    </div>
+                    <div class="chat-options">
+                        <button><i class="fas fa-ellipsis-v"></i></button>
+                    </div>
+                </div>
+
+                <div class="messages-container">
+                    <!-- Messages will be dynamically loaded here -->
+                </div>
+
+                <div class="message-input-area">
+                    <div class="special-buttons">
+                        <button title="Attach file">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button title="Share location">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                        <button title="Share contact">
+                            <i class="fas fa-address-card"></i>
+                        </button>
+                    </div>
+                    <textarea class="message-input" placeholder="Type your message..."></textarea>
+                    <button class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>WeGrow</h3>
+                    <p>Growing together, one plant at a time. Join our community of plant enthusiasts today!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quests.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get updates on new plants and gardening tips.</p>
+                    <form>
+                        <input type="email" placeholder="Your email address"
+                            style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: var(--radius); border: none;">
+                        <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 WeGrow - Plant Sharing Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample conversation data with different message histories
+        const conversationData = {
+            'Sarah Green': {
+                messages: [
+                    { type: 'received', text: 'Hi there! Thanks again for the tomato seedlings. They\'re doing great!', time: '10:30 AM' },
+                    { type: 'sent', text: 'You\'re welcome! I\'m glad they found a good home. How many did you plant?', time: '10:32 AM' },
+                    { type: 'received', text: 'I planted 4 of them in my raised bed. They seem to be adapting well to the new environment.', time: '10:35 AM' },
+                    { type: 'sent', text: 'That\'s perfect! Make sure to water them regularly but don\'t overwater. They like well-drained soil.', time: '10:37 AM' },
+                    { type: 'received', text: 'Thanks for the tip! Do you have any recommendations for organic fertilizer?', time: '10:40 AM' },
+                    { type: 'sent', text: 'I use a compost tea that I make myself. I can share the recipe if you\'re interested!', time: '10:42 AM' }
+                ]
+            },
+            'Mike Gardener': {
+                messages: [
+                    { type: 'received', text: 'Hey! I saw your post about basil cuttings. Are they still available?', time: '2:15 PM' },
+                    { type: 'sent', text: 'Yes, they are! I have about 8 healthy cuttings ready to go.', time: '2:18 PM' },
+                    { type: 'received', text: 'Perfect! When can I pick them up?', time: '2:20 PM' },
+                    { type: 'sent', text: 'I\'m free this weekend. How about Saturday morning?', time: '2:22 PM' },
+                    { type: 'received', text: 'Saturday works great for me. What time?', time: '2:25 PM' },
+                    { type: 'sent', text: 'How about 10 AM? I\'ll send you my address.', time: '2:27 PM' }
+                ]
+            },
+            'Lisa Plantlover': {
+                messages: [
+                    { type: 'received', text: 'I found the snake plant you were looking for!', time: '9:30 AM' },
+                    { type: 'sent', text: 'Really? That\'s amazing! Where did you find it?', time: '9:35 AM' },
+                    { type: 'received', text: 'There\'s a local nursery that just got some in. Want me to grab one for you?', time: '9:40 AM' },
+                    { type: 'sent', text: 'That would be incredible! How much are they asking?', time: '9:42 AM' },
+                    { type: 'received', text: '$25 for a medium-sized one. They look really healthy!', time: '9:45 AM' }
+                ]
+            },
+            'David Greensmith': {
+                messages: [
+                    { type: 'received', text: 'Hi! I\'m new to gardening and saw your posts. Do you have any gardening tips for beginners?', time: '11:00 AM' },
+                    { type: 'sent', text: 'Welcome to gardening! I\'d be happy to help. What kind of plants are you interested in?', time: '11:05 AM' },
+                    { type: 'received', text: 'I\'d like to start with herbs and maybe some vegetables.', time: '11:08 AM' },
+                    { type: 'sent', text: 'Great choice! Herbs like basil and mint are perfect for beginners. They\'re forgiving and grow quickly.', time: '11:12 AM' },
+                    { type: 'received', text: 'That sounds perfect. Do you have any starter plants available?', time: '11:15 AM' }
+                ]
+            },
+            'Anna Nature': {
+                messages: [
+                    { type: 'received', text: 'Hi! I have lavender seeds if you\'re still interested.', time: '3:00 PM' },
+                    { type: 'sent', text: 'Yes! I\'ve been looking for lavender seeds everywhere.', time: '3:05 PM' },
+                    { type: 'received', text: 'Perfect! I harvested them from my garden last season. They should germinate well.', time: '3:08 PM' },
+                    { type: 'sent', text: 'That\'s wonderful. How much would you like for them?', time: '3:10 PM' },
+                    { type: 'received', text: 'Just cover the shipping cost - about $5. I love sharing plants with fellow gardeners!', time: '3:15 PM' }
+                ]
+            }
+        };
+
+        // Current active conversation
+        let currentConversation = 'Sarah Green';
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('active');
+
+            // Toggle between hamburger and close icon
+            const icon = hamburger.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            if (mobileMenu.classList.contains('active') &&
+                !event.target.closest('.mobile-menu') &&
+                !event.target.closest('.hamburger')) {
+                mobileMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Back button functionality for mobile
+        const backButton = document.querySelector('.back-button');
+        const sidebar = document.querySelector('.conversations-sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        if (backButton) {
+            backButton.addEventListener('click', function () {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            overlay.addEventListener('click', function () {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Function to load messages for a conversation
+        function loadMessages(userName) {
+            const messagesContainer = document.querySelector('.messages-container');
+            const messages = conversationData[userName]?.messages || [];
+
+            messagesContainer.innerHTML = '';
+
+            messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${message.type}`;
+
+                if (message.type === 'received') {
+                    messageElement.innerHTML = `
+                        <div class="message-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">${message.text}</div>
+                            <div class="message-time">${message.time}</div>
+                        </div>
+                    `;
+                } else {
+                    messageElement.innerHTML = `
+                        <div class="message-content">
+                            <div class="message-bubble">${message.text}</div>
+                            <div class="message-time">${message.time}</div>
+                        </div>
+                    `;
+                }
+
+                messagesContainer.appendChild(messageElement);
+            });
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Function to update chat header
+        function updateChatHeader(userName, status) {
+            const currentUserName = document.querySelector('.current-user-name');
+            const currentUserStatus = document.querySelector('.current-user-status');
+            const chatUserAvatar = document.querySelector('.chat-user-avatar .online-status');
+
+            currentUserName.textContent = userName;
+            currentUserStatus.textContent = status === 'online' ? 'Online' : 'Last seen recently';
+
+            if (status === 'online') {
+                chatUserAvatar.classList.remove('offline');
+            } else {
+                chatUserAvatar.classList.add('offline');
+            }
+        }
+
+        // Conversation item click handler
+        const conversationItems = document.querySelectorAll('.conversation-item');
+        conversationItems.forEach(item => {
+            item.addEventListener('click', function () {
+                // Remove active class from all items
+                conversationItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+
+                // Get user data
+                const userName = this.getAttribute('data-user');
+                const userStatus = this.getAttribute('data-status');
+
+                // Update current conversation
+                currentConversation = userName;
+
+                // Load messages for this conversation
+                loadMessages(userName);
+
+                // Update chat header
+                updateChatHeader(userName, userStatus);
+
+                // Clear unread count for this conversation
+                const unreadCount = this.querySelector('.unread-count');
+                if (unreadCount && unreadCount.textContent !== '0') {
+                    unreadCount.style.display = 'none';
+                    unreadCount.textContent = '0';
+                }
+
+                // On mobile, show chat and hide sidebar
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Send message functionality
+        const messageInput = document.querySelector('.message-input');
+        const sendButton = document.querySelector('.send-button');
+        const messagesContainer = document.querySelector('.messages-container');
+
+        function sendMessage() {
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message sent';
+                messageElement.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-bubble">${messageText}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                `;
+
+                messagesContainer.appendChild(messageElement);
+
+                // Add to conversation data
+                if (!conversationData[currentConversation]) {
+                    conversationData[currentConversation] = { messages: [] };
+                }
+                conversationData[currentConversation].messages.push({
+                    type: 'sent',
+                    text: messageText,
+                    time: timeString
+                });
+
+                // Update conversation preview
+                const activeConvo = document.querySelector('.conversation-item.active');
+                if (activeConvo) {
+                    const preview = activeConvo.querySelector('.conversation-preview');
+                    const time = activeConvo.querySelector('.conversation-time');
+                    preview.textContent = messageText;
+                    time.textContent = timeString;
+                }
+
+                messageInput.value = '';
+
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                // Simulate reply after a short delay
+                setTimeout(() => simulateReply(currentConversation), 1500 + Math.random() * 2000);
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Simulate receiving a message
+        function simulateReply(userName) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const replies = {
+                'Sarah Green': [
+                    "That sounds great! I'd love to try it.",
+                    "Perfect! When can we exchange?",
+                    "Thanks for all your help with the plants!",
+                    "I'll definitely give that a try.",
+                    "That's exactly what I was looking for!"
+                ],
+                'Mike Gardener': [
+                    "Sounds good to me!",
+                    "I'll be there on time.",
+                    "Thanks for holding them for me.",
+                    "Perfect, see you then!",
+                    "I really appreciate this!"
+                ],
+                'Lisa Plantlover': [
+                    "That would be amazing!",
+                    "You're so helpful, thank you!",
+                    "I can pick it up whenever works for you.",
+                    "That's a fair price for a healthy plant.",
+                    "You're the best!"
+                ],
+                'David Greensmith': [
+                    "Thank you so much for the advice!",
+                    "I'll definitely start with those.",
+                    "This is exactly what I needed to know.",
+                    "You're really helping me get started!",
+                    "I can't wait to begin gardening!"
+                ],
+                'Anna Nature': [
+                    "That's so generous of you!",
+                    "I love this community spirit!",
+                    "I'll send you my details for shipping.",
+                    "Thank you for sharing your harvest!",
+                    "These will be perfect for my garden!"
+                ]
+            };
+
+            const userReplies = replies[userName] || replies['Sarah Green'];
+            const randomReply = userReplies[Math.floor(Math.random() * userReplies.length)];
+
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message received';
+            messageElement.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-bubble">${randomReply}</div>
+                    <div class="message-time">${timeString}</div>
+                </div>
+            `;
+
+            messagesContainer.appendChild(messageElement);
+
+            // Add to conversation data
+            if (!conversationData[userName]) {
+                conversationData[userName] = { messages: [] };
+            }
+            conversationData[userName].messages.push({
+                type: 'received',
+                text: randomReply,
+                time: timeString
+            });
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Update conversation preview and unread count
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            conversationItems.forEach(item => {
+                if (item.getAttribute('data-user') === userName) {
+                    const preview = item.querySelector('.conversation-preview');
+                    const time = item.querySelector('.conversation-time');
+                    preview.textContent = randomReply;
+                    time.textContent = timeString;
+
+                    // Only update unread count if this conversation is not currently active
+                    if (!item.classList.contains('active')) {
+                        const unreadCount = item.querySelector('.unread-count');
+                        const currentCount = parseInt(unreadCount.textContent) || 0;
+                        unreadCount.textContent = currentCount + 1;
+                        unreadCount.style.display = 'flex';
+                    }
+                }
+            });
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-conversations input');
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const conversationItems = document.querySelectorAll('.conversation-item');
+
+            conversationItems.forEach(item => {
+                const userName = item.querySelector('.conversation-name').textContent.toLowerCase();
+                const preview = item.querySelector('.conversation-preview').textContent.toLowerCase();
+
+                if (userName.includes(searchTerm) || preview.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Initialize the page with the first conversation loaded
+        window.addEventListener('load', function () {
+            loadMessages(currentConversation);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+
+        // Responsive check
+        function checkResponsive() {
+            if (window.innerWidth <= 992) {
+                // On mobile, show sidebar by default
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
+
+        window.addEventListener('resize', checkResponsive);
+        checkResponsive();
+    </script>
+</body>
+
+</html>

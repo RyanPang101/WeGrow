@@ -1,0 +1,35 @@
+{
+  "users": [],
+  "listings": [
+    {
+      "id": "seed1",
+      "ownerId": "demo",
+      "plantName": "Basil Cuttings",
+      "description": "Fresh basil cuttings, take 2-3",
+      "type": "Have",
+      "location": "Clementi, SG",
+      "radiusKm": 3,
+      "photoUrl": ""
+    }
+  ],
+  "messages": [],
+  "guides": [
+    {
+      "id": "g1",
+      "title": "Propagate Basil in Water",
+      "content": "Cut below a node, remove lower leaves, place in clean water, change every 2-3 days.",
+      "image": ""
+    }
+  ],
+  "quests": [
+    { "id": "q1", "title": "Share 3 cuttings", "points": 50, "frequency": "weekly" },
+    { "id": "q2", "title": "Help a new gardener", "points": 30, "frequency": "weekly" }
+  ],
+  "rewards": [
+    { "id": "r1", "name": "Basil seed pack", "pointsCost": 100, "cashPrice": 3.5, "sellerId": "local1", "image": "" }
+  ],
+  "sellers": [
+    { "id": "local1", "name": "Green Lane Nursery", "contact": "hello@greenlane.sg", "commissionRate": 0.1 }
+  ],
+  "transactions": []
+}

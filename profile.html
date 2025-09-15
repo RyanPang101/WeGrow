@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - WeGrow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+    /* Base Styles */
+    :root {
+        --primary: #4CAF50;
+        --primary-dark: #388E3C;
+        --secondary: #8BC34A;
+        --accent: #FFC107;
+        --light: #F1F8E9;
+        --dark: #1B5E20;
+        --gray: #757575;
+        --light-gray: #E0E0E0;
+        --white: #FFFFFF;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f8fdf7;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--dark);
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: var(--primary);
+    }
+
+    button,
+    .btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+
+    button:hover,
+    .btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    /* ===== Header & Navbar ===== */
+    header {
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        position: relative;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        z-index: 101;
+    }
+
+    .logo i {
+        margin-right: 10px;
+        color: var(--accent);
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        font-weight: 500;
+        position: relative;
+    }
+
+    /* remove underline effect */
+    .nav-links a::after {
+        content: none;
+    }
+
+    .nav-links a.active {
+        color: var(--primary);
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .login-btn {
+        background: none;
+        color: var(--primary);
+        margin-right: 15px;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        font-weight: 600;
+    }
+
+    .login-btn:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .signup-btn {
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        font-weight: 600;
+    }
+
+    .signup-btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .hamburger {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    /* Mobile Menu Styles */
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-dark);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 var(--radius) var(--radius);
+        overflow: hidden;
+        z-index: 100;
+    }
+
+    .mobile-menu.active {
+        display: block;
+    }
+
+    .mobile-nav-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-nav-links li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-nav-links a {
+        display: block;
+        padding: 15px 20px;
+        color: var(--white);
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .mobile-auth-buttons {
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-login-btn {
+        background: none;
+        color: var(--white);
+        border: 1px solid var(--white);
+        padding: 10px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .mobile-signup-btn {
+        background-color: var(--accent);
+        color: var(--dark);
+        padding: 10px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        width: 100%;
+        border: none;
+    }
+
+    /* Profile Specific Styles */
+    .profile-header {
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .cover-photo {
+        height: 250px;
+        background-color: var(--secondary);
+        border-radius: var(--radius) var(--radius) 0 0;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-size: 4rem;
+    }
+
+    .profile-info {
+        background-color: var(--white);
+        padding: 80px 30px 30px;
+        border-radius: 0 0 var(--radius) var(--radius);
+        box-shadow: var(--shadow);
+        position: relative;
+        text-align: center;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid var(--white);
+        background-color: var(--light-gray);
+        position: absolute;
+        top: -75px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray);
+        font-size: 4rem;
+    }
+
+    .profile-info h1 {
+        margin-bottom: 5px;
+        color: var(--dark);
+    }
+
+    .profile-info p {
+        color: var(--gray);
+        margin-bottom: 20px;
+    }
+
+    .edit-profile-btn {
+        background-color: var(--white);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+    }
+
+    .edit-profile-btn:hover {
+        background-color: var(--light);
+    }
+
+    .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: var(--radius);
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    .badges-section {
+        background-color: var(--white);
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+    }
+
+    .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 20px;
+    }
+
+    .badge {
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .badge-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+        font-size: 2rem;
+        color: var(--white);
+    }
+
+    .badge.earned .badge-icon {
+        background-color: var(--accent);
+    }
+
+    .badge.locked .badge-icon {
+        background-color: var(--light-gray);
+        color: var(--gray);
+    }
+
+    .badge-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .badge-desc {
+        font-size: 0.8rem;
+        color: var(--gray);
+    }
+
+    .tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--dark);
+        color: var(--white);
+        padding: 8px 12px;
+        border-radius: var(--radius);
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s;
+        z-index: 10;
+    }
+
+    .badge:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .tabs {
+        display: flex;
+        border-bottom: 2px solid var(--light-gray);
+        margin-bottom: 30px;
+    }
+
+    .tab {
+        padding: 15px 25px;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--gray);
+        position: relative;
+    }
+
+    .tab.active {
+        color: var(--primary-dark);
+    }
+
+    .tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .listings-grid,
+    .quests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .post-card,
+    .quest-card {
+        background-color: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s;
+    }
+
+    .post-card:hover,
+    .quest-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .post-image {
+        height: 200px;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 3rem;
+    }
+
+    .post-content,
+    .quest-content {
+        padding: 20px;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray);
+    }
+
+    .user-info h3 {
+        font-size: 1rem;
+        margin-bottom: 3px;
+    }
+
+    .user-info p {
+        font-size: 0.8rem;
+        color: var(--gray);
+    }
+
+    .post-text {
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: space-around;
+        border-top: 1px solid var(--light-gray);
+        padding-top: 15px;
+    }
+
+    .post-action {
+        display: flex;
+        align-items: center;
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    .post-action i {
+        margin-right: 5px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 10px;
+        background-color: var(--light-gray);
+        border-radius: 5px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: var(--accent);
+        border-radius: 5px;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: var(--primary);
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-content p {
+        margin-bottom: 5px;
+    }
+
+    .activity-time {
+        font-size: 0.8rem;
+        color: var(--gray);
+    }
+
+    .points-balance {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .points-amount {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 10px 0;
+    }
+
+    .membership-status {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+
+    .membership-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        background-color: var(--accent);
+        color: var(--dark);
+        border-radius: 30px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .leaderboard {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+    }
+
+    .leaderboard-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .leaderboard-position {
+        width: 30px;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .leaderboard-user {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .leaderboard-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray);
+        font-size: 0.8rem;
+    }
+
+    .leaderboard-points {
+        font-weight: 600;
+        color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+        background-color: var(--dark);
+        color: var(--white);
+        padding: 60px 0 30px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--accent);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: var(--light-gray);
+    }
+
+    .footer-links a:hover {
+        color: var(--accent);
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-icons a {
+        color: var(--white);
+        font-size: 1.2rem;
+    }
+
+    .social-icons a:hover {
+        color: var(--accent);
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--light-gray);
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .stats-bar {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .auth-buttons {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .badges-grid {
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        }
+
+        .tabs {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .cover-photo {
+            height: 180px;
+            font-size: 3rem;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            top: -60px;
+        }
+
+        .stats-bar {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .listings-grid,
+        .quests-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Modal Styles for Edit Profile */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: var(--white);
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .close-modal {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--light-gray);
+        border-radius: var(--radius);
+        font-size: 1rem;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    /* Listing Badges */
+    .listing-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .listing-badge.have {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .listing-badge.want {
+        background-color: var(--accent);
+        color: var(--dark);
+    }
+</style>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="plant-listings.html">Listings</a></li>
+                    <li><a href="messaging.html">Messages</a></li>
+                    <li><a href="guides.html">Guides</a></li>
+                    <li><a href="quest.html">Quests</a></li>
+                    <li><a href="rewards-store.html">Store</a></li>
+                    <li><a href="profile.html" class="active">Profile</a></li>
+                </ul>
+
+                <div class="auth-buttons">
+                    <button class="login-btn" onclick="location.href='authentication.html'">Log In</button>
+                    <button class="signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <ul class="mobile-nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quest.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html" class="active">Profile</a></li>
+                    </ul>
+                    <div class="mobile-auth-buttons">
+                        <button class="mobile-login-btn" onclick="location.href='authentication.html'">Log In</button>
+                        <button class="mobile-signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="container" style="padding-top: 30px; padding-bottom: 50px;">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="cover-photo">
+                <i class="fas fa-mountain"></i>
+            </div>
+            <div class="profile-info">
+                <div class="profile-picture">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h1 id="profile-name">Sarah Green</h1>
+                <p id="profile-location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                <p id="profile-bio">Plant enthusiast specializing in rare succulents and tropical plants.</p>
+                <button class="btn edit-profile-btn" id="edit-profile-btn">Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="stat-number">42</div>
+                <div class="stat-label">Plants Shared</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="stat-number">18</div>
+                <div class="stat-label">Plants Wanted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-number">27</div>
+                <div class="stat-label">Quests Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number">1,250</div>
+                <div class="stat-label">Points Earned</div>
+            </div>
+        </div>
+
+        <!-- Badges Section -->
+        <div class="badges-section">
+            <h2 class="section-title">My Badges</h2>
+            <div class="badges-grid">
+                <!-- Badge 1 -->
+                <div class="badge earned">
+                    <div class="badge-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="badge-name">First Plant</div>
+                    <div class="badge-desc">Shared your first plant</div>
+                    <div class="tooltip">Earned on Jan 15, 2023</div>
+                </div>
+
+                <!-- Badge 2 -->
+                <div class="badge earned">
+                    <div class="badge-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="badge-name">Community Builder</div>
+                    <div class="badge-desc">Helped 10+ members</div>
+                    <div class="tooltip">Earned on Mar 22, 2023</div>
+                </div>
+
+                <!-- Badge 3 -->
+                <div class="badge earned">
+                    <div class="badge-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="badge-name">Plant Master</div>
+                    <div class="badge-desc">50+ plants shared</div>
+                    <div class="tooltip">Earned on Jun 5, 2023</div>
+                </div>
+
+                <!-- Badge 4 -->
+                <div class="badge locked">
+                    <div class="badge-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="badge-name">Green Thumb</div>
+                    <div class="badge-desc">100+ plants shared</div>
+                    <div class="tooltip">45 more plants to unlock</div>
+                </div>
+
+                <!-- Badge 5 -->
+                <div class="badge locked">
+                    <div class="badge-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="badge-name">Plant Royalty</div>
+                    <div class="badge-desc">Top 10 contributor</div>
+                    <div class="tooltip">Reach top 10 in leaderboard</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points Balance -->
+        <div class="points-balance">
+            <h3>Your Points Balance</h3>
+            <div class="points-amount">1,250</div>
+            <p>Redeem your points for rewards in our store</p>
+            <button class="btn" onclick="location.href='rewards-store.html'">Visit Rewards Store</button>
+        </div>
+
+        <!-- Membership Status -->
+        <div class="membership-status">
+            <h3>Your Membership</h3>
+            <div class="membership-badge">Basic Member</div>
+            <p>Upgrade to Premium for exclusive benefits and features</p>
+            <button class="btn" id="premium-btn">Upgrade to Premium</button>
+        </div>
+
+        <!-- Tabbed Content Area -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="listings">My Listings</div>
+                <div class="tab" data-tab="quests">Quests & Challenges</div>
+                <div class="tab" data-tab="activity">Activity</div>
+            </div>
+
+            <!-- My Listings Tab -->
+            <div id="listings" class="tab-content active">
+                <div class="listings-grid">
+                    <!-- Listing 1 -->
+                    <div class="post-card">
+                        <div class="post-image" style="position: relative;">
+                            <i class="fas fa-seedling"></i>
+                            <span class="listing-badge have">Have</span>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">
+                                    <h3>Sarah Green</h3>
+                                    <p>New York, NY</p>
+                                </div>
+                            </div>
+                            <h3>Monstera Deliciosa Cuttings</h3>
+                            <p class="post-text">Freshly propagated monstera cuttings with healthy aerial roots. Great
+                                for beginners!</p>
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-heart"></i>
+                                    <span>15</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>8</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-eye"></i>
+                                    <span>42</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 2 -->
+                    <div class="post-card">
+                        <div class="post-image" style="position: relative;">
+                            <i class="fas fa-spa"></i>
+                            <span class="listing-badge have">Have</span>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">
+                                    <h3>Sarah Green</h3>
+                                    <p>New York, NY</p>
+                                </div>
+                            </div>
+                            <h3>Pothos Varieties</h3>
+                            <p class="post-text">Golden and marble queen pothos cuttings. Easy to grow and perfect for
+                                indoor spaces.</p>
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-heart"></i>
+                                    <span>22</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>14</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-eye"></i>
+                                    <span>67</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 3 -->
+                    <div class="post-card">
+                        <div class="post-image" style="position: relative;">
+                            <i class="fas fa-leaf"></i>
+                            <span class="listing-badge want">Want</span>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">
+                                    <h3>Sarah Green</h3>
+                                    <p>New York, NY</p>
+                                </div>
+                            </div>
+                            <h3>Variegated String of Hearts</h3>
+                            <p class="post-text">Looking for cuttings or small plant. Willing to trade multiple plants
+                                from my collection.</p>
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-heart"></i>
+                                    <span>9</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>3</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-eye"></i>
+                                    <span>28</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quests & Challenges Tab -->
+            <div id="quests" class="tab-content">
+                <h3>Weekly Quests</h3>
+                <div class="quests-grid">
+                    <!-- Quest 1 -->
+                    <div class="quest-card">
+                        <div class="quest-content">
+                            <h3>Share 3 Cuttings</h3>
+                            <p>Share plant cuttings with 3 different community members this week.</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%;"></div>
+                            </div>
+                            <p>2/3 complete • 50 points</p>
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                    <!-- Quest 2 -->
+                    <div class="quest-card">
+                        <div class="quest-content">
+                            <h3>Help a New Gardener</h3>
+                            <p>Share your knowledge with someone new to plant care.</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 30%;"></div>
+                            </div>
+                            <p>0/1 complete • 75 points</p>
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Monthly Challenges</h3>
+                <div class="quests-grid">
+                    <!-- Challenge 1 -->
+                    <div class="quest-card">
+                        <div class="quest-content">
+                            <h3>Plant Parent</h3>
+                            <p>Successfully propagate and share 10 plants this month.</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                            <p>4/10 complete • 200 points</p>
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                    <!-- Challenge 2 -->
+                    <div class="quest-card">
+                        <div class="quest-content">
+                            <h3>Community Guide</h3>
+                            <p>Create and share 3 plant care guides with the community.</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 0%;"></div>
+                            </div>
+                            <p>0/3 complete • 150 points</p>
+                            <button class="btn">Start Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Challenge 3 -->
+                    <div class="quest-card">
+                        <div class="quest-content">
+                            <h3>Completed: Plant Explorer</h3>
+                            <p>Add 5 new plant species to your collection.</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%;"></div>
+                            </div>
+                            <p>5/5 complete • 100 points</p>
+                            <button class="btn claim-btn">Claim Reward</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="leaderboard">
+                    <h3>Seasonal Leaderboard</h3>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-position">1</div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            PlantMaster2000
+                        </div>
+                        <div class="leaderboard-points">3,450 pts</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-position">2</div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            GreenThumb99
+                        </div>
+                        <div class="leaderboard-points">2,980 pts</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-position">3</div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            SucculentQueen
+                        </div>
+                        <div class="leaderboard-points">2,750 pts</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-position">14</div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            Sarah Green (You)
+                        </div>
+                        <div class="leaderboard-points">1,250 pts</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Tab -->
+            <div id="activity" class="tab-content">
+                <div class="activity-feed">
+                    <!-- Activity Item 1 -->
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>You shared <strong>Monstera Deliciosa cuttings</strong> with <strong>Tom
+                                    Botanist</strong></p>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Item 2 -->
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>You liked <strong>Elena Flowers'</strong> post about rare succulents</p>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Item 3 -->
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>You commented on <strong>Mike Gardener's</strong> tomato seedlings listing</p>
+                            <div class="activity-time">Yesterday</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Item 4 -->
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>You earned the <strong>Plant Master</strong> badge</p>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Item 5 -->
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>You added <strong>Variegated String of Hearts</strong> to your wishlist</p>
+                            <div class="activity-time">3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="edit-profile-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="Sarah Green">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" value="New York, NY">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio"
+                        name="bio">Plant enthusiast specializing in rare succulents and tropical plants.</textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn edit-profile-btn" id="cancel-edit">Cancel</button>
+                    <button type="submit" class="btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>WeGrow</h3>
+                    <p>Growing together, one plant at a time. Join our community of plant enthusiasts today!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quests.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get updates on new plants and gardening tips.</p>
+                    <form>
+                        <input type="email" placeholder="Your email address"
+                            style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: var(--radius); border: none;">
+                        <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 WeGrow - Plant Sharing Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile menu toggle functionality
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function () {
+            mobileMenu.classList.toggle('active');
+
+            // Toggle between hamburger and close icon
+            const icon = hamburger.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideNavbar = event.target.closest('.navbar');
+
+            if (!isClickInsideNavbar && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Tab toggling functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+
+                    // Show corresponding content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+
+        // Claim reward functionality
+        const claimButtons = document.querySelectorAll('.claim-btn');
+        claimButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const questCard = this.closest('.quest-card');
+
+                // Show confirmation
+                if (confirm("Claim your reward?")) {
+                    // In a real app, this would connect to a backend
+                    this.textContent = 'Reward Claimed!';
+                    this.disabled = true;
+                    this.style.backgroundColor = '#4CAF50';
+
+                    // Show success message
+                    alert('Reward claimed successfully! Points have been added to your balance.');
+                }
+            });
+        });
+
+        // Upgrade to premium functionality
+        document.getElementById('premium-btn').addEventListener('click', function () {
+            alert('Premium membership features: \n- Exclusive quests with higher rewards\n- Early access to new plants\n- Special badges on your profile\n- Ad-free experience\n\nRedirecting to membership page...');
+            // In a real app, this would redirect to a membership page
+        });
+
+        // Edit Profile Modal Functionality
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const profileForm = document.getElementById('profile-form');
+
+        // Open modal
+        editProfileBtn.addEventListener('click', function () {
+            editProfileModal.style.display = 'flex';
+        });
+
+        // Close modal
+        function closeModal() {
+            editProfileModal.style.display = 'none';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelEditBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function (event) {
+            if (event.target === editProfileModal) {
+                closeModal();
+            }
+        });
+
+        // Handle form submission
+        profileForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const bio = document.getElementById('bio').value;
+
+            // Update profile
+            document.getElementById('profile-name').textContent = name;
+            document.getElementById('profile-location').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${location}`;
+            document.getElementById('profile-bio').textContent = bio;
+
+            // Close modal
+            closeModal();
+
+            // Show success message
+            alert('Profile updated successfully!');
+        });
+    </script>
+</body>
+
+</html>
