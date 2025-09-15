@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeGrow - Join Our Plant Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+            /* Base Styles */
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #8BC34A;
+            --accent: #FFC107;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --gray: #757575;
+            --light-gray: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fdf7;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234CAF50" fill-opacity="0.05"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%234CAF50" stroke-opacity="0.05" stroke-width="2"/></svg>');
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        button, .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover, .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            flex-grow: 1;
+            padding: 40px 0;
+        }
+
+        .auth-info {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius);
+            padding: 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-right: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,100 M100,0 L0,100" stroke="white" stroke-opacity="0.1" stroke-width="2"/></svg>');
+            background-size: cover;
+        }
+
+        .auth-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .benefits-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .benefits-list i {
+            margin-right: 10px;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .plant-decoration {
+            text-align: center;
+            font-size: 5rem;
+            opacity: 0.8;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .auth-forms {
+            flex: 1;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-left: 20px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            text-align: center;
+            flex: 1;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab:hover {
+            color: var(--primary-dark);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .form-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        .form {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            top: 0;
+            left: 0;
+            visibility: hidden;
+        }
+
+        .form.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--light-gray);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: var(--gray);
+        }
+
+        .google-btn {
+            background-color: white;
+            color: #757575;
+            border: 2px solid var(--light-gray);
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .google-btn:hover {
+            background-color: #f5f5f5;
+            border-color: var(--gray);
+            transform: translateY(-1px);
+        }
+
+        .google-btn i {
+            margin-right: 10px;
+            color: #DB4437;
+        }
+
+        .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .interest-tag {
+            background-color: var(--light);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .interest-tag:hover {
+            background-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .interest-tag.selected {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--light);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px dashed var(--primary);
+        }
+
+        .photo-preview img {
+            max-width: 100%;
+            display: none;
+        }
+
+        .upload-btn {
+            background-color: var(--light);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-btn:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-1px);
+        }
+
+        .terms {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .auth-info, .auth-forms {
+                margin: 0 0 30px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .auth-forms {
+                padding: 25px;
+            }
+            
+            .form-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                padding: 12px;
+            }
+            
+            .auth-info {
+                padding: 25px;
+            }
+            
+            .auth-info h2 {
+                font-size: 1.8rem;
+            }
+            
+            .plant-decoration {
+                font-size: 3.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+</style>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </a>
+                <a href="index.html" class="btn">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="container auth-container">
+        <!-- Info Section -->
+        <div class="auth-info">
+            <h2>Join Our Growing Community</h2>
+            <ul class="benefits-list">
+                <li><i class="fas fa-seedling"></i> Connect with plant lovers in your area</li>
+                <li><i class="fas fa-exchange-alt"></i> Share and swap plants and cuttings</li>
+                <li><i class="fas fa-graduation-cap"></i> Learn from expert gardening guides</li>
+                <li><i class="fas fa-trophy"></i> Earn rewards and unlock achievements</li>
+                <li><i class="fas fa-store"></i> Get discounts on gardening supplies</li>
+            </ul>
+            <div class="plant-decoration">
+                <i class="fas fa-spa"></i>
+            </div>
+        </div>
+
+        <!-- Forms Section -->
+        <div class="auth-forms">
+            <div class="form-header">
+                <h2>Welcome to WeGrow</h2>
+                <p>Please sign in or create an account to continue</p>
+            </div>
+
+            <div class="form-tabs">
+                <div class="tab active" data-tab="login">Login</div>
+                <div class="tab" data-tab="signup">Sign Up</div>
+            </div>
+
+            <div class="form-container">
+                <!-- Login Form -->
+                <form class="form active" id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email or Username</label>
+                        <input type="text" class="form-control" id="login-email" placeholder="Enter your email or username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+
+                    <a href="#" class="forgot-password">Forgot password?</a>
+
+                    <button type="submit" class="btn" style="width: 100%;">Log In</button>
+
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <button type="button" class="google-btn">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                </form>
+
+                <!-- Signup Form -->
+                <form class="form" id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" class="form-control" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" class="form-control" id="signup-email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" class="form-control" id="signup-password" placeholder="Create a password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" class="form-control" id="signup-confirm" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-location">Your Location</label>
+                        <input type="text" class="form-control" id="signup-location" placeholder="City, State" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gardening Interests (select up to 5)</label>
+                        <div class="interests-container">
+                            <div class="interest-tag">Vegetables</div>
+                            <div class="interest-tag">Herbs</div>
+                            <div class="interest-tag">Flowers</div>
+                            <div class="interest-tag">Succulents</div>
+                            <div class="interest-tag">Indoor Plants</div>
+                            <div class="interest-tag">Trees</div>
+                            <div class="interest-tag">Composting</div>
+                            <div class="interest-tag">Hydroponics</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Profile Photo</label>
+                        <div class="photo-upload">
+                            <div class="photo-preview">
+                                <i class="fas fa-user"></i>
+                                <img id="preview-img" src="" alt="Preview">
+                            </div>
+                            <div>
+                                <button type="button" class="upload-btn">
+                                    <i class="fas fa-upload"></i> Upload Photo
+                                </button>
+                                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+
+                    <div class="divider">
+                        <span>Or sign up with</span>
+                    </div>
+
+                    <button type="button" class="google-btn">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+
+                    <p class="terms">
+                        By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo" style="color: white;">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </div>
+                <div class="footer-links">
+                    <a href="#">Help Center</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 WeGrow - Plant Sharing Network. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+// Toggle between login and signup forms
+        const tabs = document.querySelectorAll('.tab');
+        const forms = document.querySelectorAll('.form');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding form
+                forms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === `${tabId}-form`) {
+                        // Small delay for smooth transition
+                        setTimeout(() => {
+                            form.classList.add('active');
+                        }, 50);
+                    }
+                });
+            });
+        });
+        
+        // Interest tags selection
+        const interestTags = document.querySelectorAll('.interest-tag');
+        let selectedCount = 0;
+        
+        interestTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                if (tag.classList.contains('selected')) {
+                    tag.classList.remove('selected');
+                    selectedCount--;
+                } else {
+                    if (selectedCount < 5) {
+                        tag.classList.add('selected');
+                        selectedCount++;
+                    } else {
+                        alert('You can select up to 5 interests only');
+                    }
+                }
+            });
+        });
+        
+        // Photo upload preview
+        const photoUpload = document.getElementById('photo-upload');
+        const previewImg = document.getElementById('preview-img');
+        const uploadBtn = document.querySelector('.upload-btn');
+        const userIcon = document.querySelector('.photo-preview .fa-user');
+        
+        uploadBtn.addEventListener('click', () => {
+            photoUpload.click();
+        });
+        
+        photoUpload.addEventListener('change', () => {
+            const file = photoUpload.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    userIcon.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Form validation and submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (email && password) {
+                alert(`Login attempt for: ${email}`);
+            }
+        });
+        
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (name && email && password) {
+                alert(`Account creation attempt for: ${name} (${email})`);
+            }
+        });
+        
+        // Google sign-in
+        document.querySelectorAll('.google-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Google authentication would be implemented here!');
+            });
+        });
+        
+        // Forgot password
+        document.querySelector('.forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Password reset functionality would be implemented here!');
+        });
+    </script>
+</body>
+</html>

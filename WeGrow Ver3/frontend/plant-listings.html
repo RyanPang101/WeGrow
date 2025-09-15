@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Listings - WeGrow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<style>
+  /* Base Styles from original WeGrow design */
+  :root {
+    --primary: #4caf50;
+    --primary-dark: #388e3c;
+    --secondary: #8bc34a;
+    --accent: #ffc107;
+    --light: #f1f8e9;
+    --dark: #1b5e20;
+    --gray: #757575;
+    --light-gray: #e0e0e0;
+    --white: #ffffff;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #f8fdf7;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--dark);
+    transition: color 0.3s;
+  }
+
+  a:hover {
+    color: var(--primary);
+  }
+
+  button,
+  .btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+
+  button:hover,
+  .btn:hover {
+    background-color: var(--primary-dark);
+  }
+
+  /* Header & Navigation */
+  header {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    position: relative;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-decoration: none;
+    z-index: 101;
+  }
+
+  .logo i {
+    margin-right: 10px;
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+  }
+
+  .nav-links li {
+    margin: 0 15px;
+  }
+
+  .nav-links a {
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--dark);
+    transition: color 0.3s;
+  }
+
+  .nav-links a.active {
+    color: var(--primary);
+  }
+
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  .login-btn {
+    background: none;
+    color: var(--primary);
+    margin-right: 15px;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-weight: 600;
+  }
+
+  .login-btn:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .signup-btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-weight: 600;
+  }
+
+  .signup-btn:hover {
+    background-color: var(--primary-dark);
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 101;
+  }
+
+  /* Mobile Menu Styles */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-dark);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  .mobile-menu.active {
+    display: block;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-links li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-nav-links a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--white);
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+
+  .mobile-nav-links a:hover,
+  .mobile-nav-links a.active {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+
+  .mobile-auth-buttons {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-login-btn {
+    background: none;
+    color: var(--white);
+    border: 1px solid var(--white);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    width: 100%;
+  }
+
+  .mobile-signup-btn {
+    background-color: var(--accent);
+    color: var(--dark);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    width: 100%;
+    border: none;
+  }
+
+  /* Page Header */
+  .page-header {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--secondary) 100%);
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+  }
+
+  .add-listing-btn {
+    background-color: var(--accent);
+    color: var(--dark);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: var(--radius);
+    transition: all 0.3s;
+  }
+
+  .add-listing-btn:hover {
+    background-color: #ffb300;
+    transform: translateY(-2px);
+  }
+
+  /* Filter Section */
+  .filters-section {
+    background-color: var(--white);
+    padding: 30px 0;
+    box-shadow: var(--shadow);
+  }
+
+  .filters-container {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .search-filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .search-bar {
+    position: relative;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--radius);
+    font-size: 1rem;
+  }
+
+  .search-bar i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filter-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 5px;
+  }
+
+  .filter-group select,
+  .filter-group input {
+    padding: 10px;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: var(--light-gray);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .toggle-switch.active {
+    background-color: var(--primary);
+  }
+
+  .toggle-switch::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+  }
+
+  .toggle-switch.active::after {
+    transform: translateX(30px);
+  }
+
+  .sort-options {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sort-btn {
+    background-color: transparent;
+    color: var(--dark);
+    border: 2px solid var(--light-gray);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+
+  .sort-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* Listings Grid */
+  .listings-section {
+    padding: 40px 0;
+  }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+  }
+
+  .listing-card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+    position: relative;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .listing-image {
+    height: 200px;
+    background: linear-gradient(135deg, var(--light) 0%, #e8f5e8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 3rem;
+    position: relative;
+  }
+
+  .listing-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .have {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .want {
+    background-color: var(--accent);
+    color: var(--dark);
+  }
+
+  .listing-content {
+    padding: 20px;
+  }
+
+  .listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .listing-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 5px;
+  }
+
+  .listing-description {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 15px;
+  }
+
+  .listing-distance {
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .listing-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    margin-right: 10px;
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: var(--white);
+    margin: 2% auto;
+    padding: 30px;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light-gray);
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    color: var(--dark);
+  }
+
+  .close {
+    color: var(--gray);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: var(--dark);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+
+  .form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .photo-upload {
+    border: 2px dashed var(--light-gray);
+    padding: 30px;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .photo-upload:hover {
+    border-color: var(--primary);
+  }
+
+  .photo-upload i {
+    font-size: 2rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  .photo-preview {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: var(--radius);
+  }
+
+  .have-want-toggle {
+    display: flex;
+    background-color: var(--light);
+    border-radius: var(--radius);
+    padding: 5px;
+  }
+
+  .toggle-option {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-radius: calc(var(--radius) - 5px);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .toggle-option.active.have {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .toggle-option.active.want {
+    background-color: var(--accent);
+    color: var(--dark);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+  }
+
+  .cancel-btn {
+    background-color: var(--light-gray);
+    color: var(--dark);
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--dark);
+    color: var(--white);
+    padding: 60px 0 30px;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+  }
+
+  .footer-column h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--accent);
+  }
+
+  .footer-links {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+
+  .footer-links a {
+    color: var(--light-gray);
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .social-icons a {
+    color: var(--white);
+    font-size: 1.2rem;
+  }
+
+  .social-icons a:hover {
+    color: var(--accent);
+  }
+
+  .copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--light-gray);
+    font-size: 0.9rem;
+  }
+
+  /* Improved Color Scheme */
+  body {
+    background: linear-gradient(135deg, #f8fdf7 0%, #f1f8e9 100%);
+  }
+
+  .page-header {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--secondary) 70%,
+        #81c784 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M30,5 Q35,15 30,25 Q25,15 30,5 M30,35 Q35,45 30,55 Q25,45 30,35" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>');
+    opacity: 0.3;
+  }
+
+  .filters-section {
+    background: linear-gradient(135deg, var(--white) 0%, #fafffe 100%);
+    border-bottom: 3px solid var(--light);
+  }
+
+  .search-bar input:focus,
+  .filter-group select:focus,
+  .filter-group input:focus {
+    border-color: var(--secondary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  }
+
+  .listing-card {
+    background: linear-gradient(135deg, var(--white) 0%, #fefffe 100%);
+    border: 1px solid rgba(76, 175, 80, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.15);
+    border-color: rgba(76, 175, 80, 0.2);
+  }
+
+  .listing-image {
+    background: linear-gradient(135deg,
+        var(--light) 0%,
+        #e8f5e8 50%,
+        #f1f8e9 100%);
+    position: relative;
+  }
+
+  .listing-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center,
+        rgba(76, 175, 80, 0.1) 0%,
+        transparent 70%);
+  }
+
+  .have {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--primary-dark) 100%);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  }
+
+  .want {
+    background: linear-gradient(135deg, var(--accent) 0%, #ffb300 100%);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+  }
+
+  .sort-btn {
+    transition: all 0.3s ease;
+  }
+
+  .sort-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+  }
+
+  .sort-btn.active {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--secondary) 100%);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  }
+
+  .toggle-switch {
+    background: linear-gradient(135deg, var(--light-gray) 0%, #e8e8e8 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .toggle-switch.active {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--secondary) 100%);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  }
+
+  .modal-content {
+    background: linear-gradient(135deg, var(--white) 0%, #fefffe 100%);
+  }
+
+  .photo-upload {
+    background: linear-gradient(135deg, #fafffe 0%, var(--light) 100%);
+    transition: all 0.3s ease;
+  }
+
+  .photo-upload:hover {
+    border-color: var(--secondary);
+    background: linear-gradient(135deg, var(--light) 0%, #e8f5e8 100%);
+  }
+
+  .have-want-toggle {
+    background: linear-gradient(135deg, var(--light) 0%, #f1f8e9 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .toggle-option.active.have {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--primary-dark) 100%);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  }
+
+  .toggle-option.active.want {
+    background: linear-gradient(135deg, var(--accent) 0%, #ffb300 100%);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+  }
+
+  .add-listing-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, #ffb300 100%);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .add-listing-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
+    transition: left 0.5s;
+  }
+
+  .add-listing-btn:hover::before {
+    left: 100%;
+  }
+
+  .btn {
+    background: linear-gradient(135deg,
+        var(--primary) 0%,
+        var(--primary-dark) 100%);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 992px) {
+    .nav-links {
+      display: none;
+    }
+
+    .hamburger {
+      display: block;
+    }
+
+    .auth-buttons {
+      display: none;
+    }
+
+    .filters-container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .search-filters {
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .sort-options {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .search-filters {
+      grid-template-columns: 1fr;
+    }
+
+    .listings-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+      margin: 5% auto;
+      padding: 20px;
+    }
+  }
+</style>
+
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <i class="fas fa-leaf"></i>
+          WeGrow
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="plant-listings.html" class="active">Listings</a></li>
+          <li><a href="messaging.html">Messages</a></li>
+          <li><a href="guides.html">Guides</a></li>
+          <li><a href="quest.html">Quests</a></li>
+          <li><a href="rewards-store.html">Store</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+
+        <div class="auth-buttons">
+          <button class="login-btn" onclick="location.href='authentication.html'">Log In</button>
+          <button class="signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+        </div>
+
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+          <ul class="mobile-nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="plant-listings.html" class="active">Listings</a></li>
+            <li><a href="messaging.html">Messages</a></li>
+            <li><a href="guides.html">Guides</a></li>
+            <li><a href="quest.html">Quests</a></li>
+            <li><a href="rewards-store.html">Store</a></li>
+            <li><a href="profile.html">Profile</a></li>
+          </ul>
+          <div class="mobile-auth-buttons">
+            <button class="mobile-login-btn" onclick="location.href='authentication.html'">Log In</button>
+            <button class="mobile-signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Plant Listings</h1>
+      <p>
+        Discover amazing plants in your community or share your own green
+        treasures
+      </p>
+      <button class="add-listing-btn" onclick="openModal()">
+        <i class="fas fa-plus"></i> Add New Listing
+      </button>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters-container">
+        <div class="search-filters">
+          <div class="search-bar">
+            <input type="text" placeholder="Search plants..." id="searchInput" />
+            <i class="fas fa-search"></i>
+          </div>
+
+          <div class="filter-group">
+            <label>Radius</label>
+            <input type="range" min="1" max="50" value="10" id="radiusSlider" />
+            <small><span id="radiusValue">10</span> miles</small>
+          </div>
+
+          <div class="filter-group">
+            <label>Plant Type</label>
+            <select id="plantType">
+              <option value="">All Types</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="herbs">Herbs</option>
+              <option value="flowers">Flowers</option>
+              <option value="succulents">Succulents</option>
+              <option value="houseplants">Houseplants</option>
+              <option value="trees">Trees</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Have/Want</label>
+            <div class="toggle-switch" id="haveWantToggle"></div>
+            <small id="toggleLabel">All</small>
+          </div>
+        </div>
+
+        <div class="sort-options">
+          <button class="sort-btn active" data-sort="newest">Newest</button>
+          <button class="sort-btn" data-sort="closest">Closest</button>
+          <button class="sort-btn" data-sort="popular">Popular</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Listings Grid -->
+  <section class="listings-section">
+    <div class="container">
+      <div class="listings-grid" id="listingsGrid">
+        <!-- Listing 1 -->
+        <div class="listing-card" data-type="vegetables" data-status="have">
+          <div class="listing-image">
+            <i class="fas fa-seedling"></i>
+            <span class="listing-badge have">Have</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Heirloom Tomato Seedlings</h3>
+                <div class="listing-distance">1.2 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Organic Cherokee Purple tomato seedlings. 6 weeks old, hardened
+              off and ready for transplant. Great for beginners!
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Mike Gardener</div>
+                  <div class="post-date">2 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing 2 -->
+        <div class="listing-card" data-type="succulents" data-status="want">
+          <div class="listing-image">
+            <i class="fas fa-spa"></i>
+            <span class="listing-badge want">Want</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Snake Plant Cutting</h3>
+                <div class="listing-distance">0.8 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Looking for a healthy snake plant cutting to add to my indoor
+              collection. Willing to trade or pay!
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Lisa Plantlover</div>
+                  <div class="post-date">1 day ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing 3 -->
+        <div class="listing-card" data-type="herbs" data-status="have">
+          <div class="listing-image">
+            <i class="fas fa-leaf"></i>
+            <span class="listing-badge have">Have</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Fresh Basil Cuttings</h3>
+                <div class="listing-distance">2.3 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Genovese basil cuttings from my organic garden. Perfect for
+              cooking and easy to root in water.
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">David Greensmith</div>
+                  <div class="post-date">3 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing 4 -->
+        <div class="listing-card" data-type="flowers" data-status="want">
+          <div class="listing-image">
+            <i class="fas fa-tree"></i>
+            <span class="listing-badge want">Want</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Lavender Seeds</h3>
+                <div class="listing-distance">3.1 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Looking for organic lavender seeds to start my herb garden.
+              English or French varieties preferred.
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Anna Nature</div>
+                  <div class="post-date">1 week ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing 5 -->
+        <div class="listing-card" data-type="houseplants" data-status="have">
+          <div class="listing-image">
+            <i class="fas fa-cannabis"></i>
+            <span class="listing-badge have">Have</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Monstera Deliciosa Cutting</h3>
+                <div class="listing-distance">1.7 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Beautiful variegated monstera cutting with aerial roots. Already
+              showing new growth!
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Sarah Green</div>
+                  <div class="post-date">5 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing 6 -->
+        <div class="listing-card" data-type="vegetables" data-status="want">
+          <div class="listing-image">
+            <i class="fas fa-carrot"></i>
+            <span class="listing-badge want">Want</span>
+          </div>
+          <div class="listing-content">
+            <div class="listing-header">
+              <div>
+                <h3 class="listing-title">Heirloom Pepper Seeds</h3>
+                <div class="listing-distance">2.8 miles away</div>
+              </div>
+            </div>
+            <p class="listing-description">
+              Seeking heirloom hot pepper seeds - jalapeño, habanero, or ghost
+              pepper varieties welcome!
+            </p>
+            <div class="listing-footer">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Carlos Spice</div>
+                  <div class="post-date">4 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Listing Modal -->
+  <div id="addListingModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Plant Listing</h2>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+
+      <form id="addListingForm">
+        <div class="form-group">
+          <label>Plant Photo</label>
+          <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+            <i class="fas fa-camera"></i>
+            <p>Click to upload a photo</p>
+            <input type="file" id="photoInput" accept="image/*" style="display: none" onchange="previewPhoto(this)" />
+            <img id="photoPreview" class="photo-preview" style="display: none" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Plant Name *</label>
+          <input type="text" required placeholder="e.g., Monstera Deliciosa, Tomato Seedlings" />
+        </div>
+
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea required placeholder="Describe your plant, its condition, care instructions, etc."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select>
+            <option value="vegetables">Vegetables</option>
+            <option value="herbs">Herbs</option>
+            <option value="flowers">Flowers</option>
+            <option value="succulents">Succulents</option>
+            <option value="houseplants">Houseplants</option>
+            <option value="trees">Trees</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" placeholder="e.g., organic, rare, beginner-friendly" />
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" placeholder="Your address or neighborhood" />
+        </div>
+
+        <div class="form-group">
+          <label>Sharing Radius</label>
+          <input type="range" min="1" max="50" value="5" id="modalRadiusSlider" />
+          <small><span id="modalRadiusValue">5</span> miles</small>
+        </div>
+
+        <div class="form-group">
+          <label>Status *</label>
+          <div class="have-want-toggle">
+            <div class="toggle-option have active" data-status="have">
+              <i class="fas fa-leaf"></i> Have
+            </div>
+            <div class="toggle-option want" data-status="want">
+              <i class="fas fa-search"></i> Want
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn cancel-btn" onclick="closeModal()">
+            Cancel
+          </button>
+          <button type="submit" class="btn">Create Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>WeGrow</h3>
+          <p>Growing together, one plant at a time. Join our community of plant enthusiasts today!</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="plant-listings.html">Listings</a></li>
+            <li><a href="messaging.html">Messages</a></li>
+            <li><a href="guides.html">Guides</a></li>
+            <li><a href="quests.html">Quests</a></li>
+            <li><a href="rewards-store.html">Store</a></li>
+            <li><a href="profile.html">Profile</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul class="footer-links">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Community Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Newsletter</h3>
+          <p>Subscribe to get updates on new plants and gardening tips.</p>
+          <form>
+            <input type="email" placeholder="Your email address"
+              style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: var(--radius); border: none;">
+            <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2025 WeGrow - Plant Sharing Network. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Global variables
+    let currentHaveWantFilter = "all";
+    let currentSort = "newest";
+
+    // Initialize page
+    document.addEventListener("DOMContentLoaded", function () {
+      initializeFilters();
+      initializeModal();
+    });
+
+    // Filter functionality
+    function initializeFilters() {
+      // Radius slider
+      const radiusSlider = document.getElementById("radiusSlider");
+      const radiusValue = document.getElementById("radiusValue");
+
+      radiusSlider.addEventListener("input", function () {
+        radiusValue.textContent = this.value;
+      });
+
+      // Have/Want toggle
+      const haveWantToggle = document.getElementById("haveWantToggle");
+      const toggleLabel = document.getElementById("toggleLabel");
+
+      haveWantToggle.addEventListener("click", function () {
+        if (currentHaveWantFilter === "all") {
+          currentHaveWantFilter = "have";
+          this.classList.add("active");
+          toggleLabel.textContent = "Have";
+        } else if (currentHaveWantFilter === "have") {
+          currentHaveWantFilter = "want";
+          toggleLabel.textContent = "Want";
+        } else {
+          currentHaveWantFilter = "all";
+          this.classList.remove("active");
+          toggleLabel.textContent = "All";
+        }
+        filterListings();
+      });
+
+      // Search input
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterListings);
+
+      // Plant type dropdown
+      document
+        .getElementById("plantType")
+        .addEventListener("change", filterListings);
+
+      // Sort buttons
+      document.querySelectorAll(".sort-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".sort-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          currentSort = this.dataset.sort;
+          sortListings();
+        });
+      });
+    }
+
+    // Filter listings based on current filters
+    function filterListings() {
+      const searchTerm = document
+        .getElementById("searchInput")
+        .value.toLowerCase();
+      const plantType = document.getElementById("plantType").value;
+      const listings = document.querySelectorAll(".listing-card");
+
+      listings.forEach((listing) => {
+        const title = listing
+          .querySelector(".listing-title")
+          .textContent.toLowerCase();
+        const description = listing
+          .querySelector(".listing-description")
+          .textContent.toLowerCase();
+        const type = listing.dataset.type;
+        const status = listing.dataset.status;
+
+        let show = true;
+
+        // Search filter
+        if (
+          searchTerm &&
+          !title.includes(searchTerm) &&
+          !description.includes(searchTerm)
+        ) {
+          show = false;
+        }
+
+        // Plant type filter
+        if (plantType && type !== plantType) {
+          show = false;
+        }
+
+        // Have/Want filter
+        if (
+          currentHaveWantFilter !== "all" &&
+          status !== currentHaveWantFilter
+        ) {
+          show = false;
+        }
+
+        listing.style.display = show ? "block" : "none";
+      });
+    }
+
+    // Sort listings
+    function sortListings() {
+      const grid = document.getElementById("listingsGrid");
+      const listings = Array.from(grid.children);
+
+      listings.sort((a, b) => {
+        if (currentSort === "newest") {
+          // Sort by date (newest first) - simplified for demo
+          const dateA = a.querySelector(".post-date").textContent;
+          const dateB = b.querySelector(".post-date").textContent;
+          return dateA.localeCompare(dateB);
+        } else if (currentSort === "closest") {
+          // Sort by distance
+          const distanceA = parseFloat(
+            a.querySelector(".listing-distance").textContent
+          );
+          const distanceB = parseFloat(
+            b.querySelector(".listing-distance").textContent
+          );
+          return distanceA - distanceB;
+        } else if (currentSort === "popular") {
+          // Random sorting for demo (in real app, would use actual popularity metrics)
+          return Math.random() - 0.5;
+        }
+      });
+
+      // Re-append sorted listings
+      listings.forEach((listing) => grid.appendChild(listing));
+    }
+
+    // Modal functionality
+    function initializeModal() {
+      // Modal radius slider
+      const modalRadiusSlider = document.getElementById("modalRadiusSlider");
+      const modalRadiusValue = document.getElementById("modalRadiusValue");
+
+      modalRadiusSlider.addEventListener("input", function () {
+        modalRadiusValue.textContent = this.value;
+      });
+
+      // Have/Want toggle in modal
+      document.querySelectorAll(".toggle-option").forEach((option) => {
+        option.addEventListener("click", function () {
+          document
+            .querySelectorAll(".toggle-option")
+            .forEach((opt) => opt.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+
+      // Form submission
+      document
+        .getElementById("addListingForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          handleFormSubmission();
+        });
+    }
+
+    // Open modal
+    function openModal() {
+      document.getElementById("addListingModal").style.display = "block";
+      document.body.style.overflow = "hidden";
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById("addListingModal").style.display = "none";
+      document.body.style.overflow = "auto";
+      resetForm();
+    }
+
+    // Photo preview
+    function previewPhoto(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const preview = document.getElementById("photoPreview");
+          preview.src = e.target.result;
+          preview.style.display = "block";
+
+          // Update upload area
+          const uploadArea = input.parentElement;
+          uploadArea.style.border = "2px solid var(--primary)";
+          uploadArea.querySelector("p").textContent =
+            "Photo uploaded! Click to change";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Handle form submission
+    function handleFormSubmission() {
+      const form = document.getElementById("addListingForm");
+      const formData = new FormData(form);
+
+      // Get form values
+      const plantName = form.querySelector('input[type="text"]').value;
+      const description = form.querySelector("textarea").value;
+      const category = form.querySelector("select").value;
+      const status = form.querySelector(".toggle-option.active").dataset
+        .status;
+
+      if (!plantName || !description) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      // Create new listing card
+      createNewListingCard({
+        name: plantName,
+        description: description,
+        category: category,
+        status: status,
+        distance: "0.1 miles away",
+        userName: "You",
+        postDate: "Just now",
+      });
+
+      // Close modal and show success message
+      closeModal();
+      showSuccessMessage();
+    }
+
+    // Create new listing card
+    function createNewListingCard(data) {
+      const grid = document.getElementById("listingsGrid");
+      const newCard = document.createElement("div");
+      newCard.className = "listing-card";
+      newCard.dataset.type = data.category;
+      newCard.dataset.status = data.status;
+
+      newCard.innerHTML = `
+                <div class="listing-image">
+                    <i class="fas fa-seedling"></i>
+                    <span class="listing-badge ${data.status}">${data.status === "have" ? "Have" : "Want"
+        }</span>
+                </div>
+                <div class="listing-content">
+                    <div class="listing-header">
+                        <div>
+                            <h3 class="listing-title">${data.name}</h3>
+                            <div class="listing-distance">${data.distance}</div>
+                        </div>
+                    </div>
+                    <p class="listing-description">${data.description}</p>
+                    <div class="listing-footer">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-details">
+                                <div class="user-name">${data.userName}</div>
+                                <div class="post-date">${data.postDate}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+      // Insert at the beginning of the grid
+      grid.insertBefore(newCard, grid.firstChild);
+    }
+
+    // Reset form
+    function resetForm() {
+      document.getElementById("addListingForm").reset();
+      document.getElementById("photoPreview").style.display = "none";
+      document
+        .querySelectorAll(".toggle-option")
+        .forEach((opt) => opt.classList.remove("active"));
+      document.querySelector(".toggle-option.have").classList.add("active");
+      document.getElementById("modalRadiusValue").textContent = "5";
+
+      // Reset upload area
+      const uploadArea = document.querySelector(".photo-upload");
+      uploadArea.style.border = "2px dashed var(--light-gray)";
+      uploadArea.querySelector("p").textContent = "Click to upload a photo";
+    }
+
+    // Show success message
+    function showSuccessMessage() {
+      const message = document.createElement("div");
+      message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: var(--primary);
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+                animation: slideIn 0.3s ease;
+            `;
+      message.innerHTML =
+        '<i class="fas fa-check"></i> Listing created successfully!';
+
+      document.body.appendChild(message);
+
+      setTimeout(() => {
+        message.remove();
+      }, 3000);
+    }
+
+    // Mobile menu toggle
+    document.querySelector(".hamburger").addEventListener("click", function () {
+      const mobileMenu = document.getElementById("mobileMenu");
+      mobileMenu.classList.toggle("active");
+
+      // Toggle hamburger icon between bars and X
+      const icon = this.querySelector("i");
+      if (mobileMenu.classList.contains("active")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-times");
+      } else {
+        icon.classList.remove("fa-times");
+        icon.classList.add("fa-bars");
+      }
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function (event) {
+      const modal = document.getElementById("addListingModal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Add CSS animation for success message
+    const style = document.createElement("style");
+    style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+    document.head.appendChild(style);
+  </script>
+</body>
+
+</html>

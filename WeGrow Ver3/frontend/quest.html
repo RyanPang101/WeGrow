@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quests - WeGrow Plant Sharing Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles (Consistent with index.html) */
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #8BC34A;
+            --accent: #FFC107;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --gray: #757575;
+            --light-gray: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fdf7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary);
+        }
+
+        button,
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover,
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--dark);
+            font-size: 2rem;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* Header & Navigation (Same as index.html) */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            z-index: 101;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* remove underline effect */
+        .nav-links a::after {
+            content: none;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn {
+            background: none;
+            color: var(--primary);
+            margin-right: 15px;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .signup-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-dark);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 var(--radius) var(--radius);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-links li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-links li:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav-links a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--white);
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .mobile-auth-buttons {
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-login-btn {
+            background: none;
+            color: var(--white);
+            border: 1px solid var(--white);
+            padding: 10px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .mobile-signup-btn {
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 10px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            width: 100%;
+            border: none;
+        }
+
+        /* Quest Page Specific Styles */
+        .page-header {
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .user-stats {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .points-balance {
+            border-left: 4px solid var(--accent);
+        }
+
+        .membership-status {
+            border-left: 4px solid var(--primary);
+        }
+
+        .premium-btn {
+            background-color: var(--accent);
+            color: var(--dark);
+            margin-left: auto;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        .quests-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .quest-section {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .quest-section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .quest-section-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .quests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .quest-card {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .quest-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .quest-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .quest-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .quest-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .quest-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .quest-reward {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .quest-reward i {
+            margin-right: 5px;
+        }
+
+        .progress-container {
+            margin-bottom: 15px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .quest-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .claim-btn {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .completed-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .leaderboard-section {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .season-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .rank-1 {
+            background-color: var(--gold);
+            color: var(--dark);
+        }
+
+        .rank-2 {
+            background-color: var(--silver);
+            color: var(--dark);
+        }
+
+        .rank-3 {
+            background-color: var(--bronze);
+            color: var(--dark);
+        }
+
+        .rank-other {
+            background-color: var(--light-gray);
+            color: var(--gray);
+        }
+
+        .leaderboard-user {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-points {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        /* Footer (Same as index.html) */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-stats {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .quests-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .quest-section {
+                padding: 15px;
+            }
+
+            .leaderboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="plant-listings.html">Listings</a></li>
+                    <li><a href="messaging.html">Messages</a></li>
+                    <li><a href="guides.html">Guides</a></li>
+                    <li><a href="quest.html" class="active">Quests</a></li>
+                    <li><a href="rewards-store.html">Store</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+
+                <div class="auth-buttons">
+                    <button class="login-btn" onclick="location.href='authentication.html'">Log In</button>
+                    <button class="signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <ul class="mobile-nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quest.html" class="active">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                    <div class="mobile-auth-buttons">
+                        <button class="mobile-login-btn" onclick="location.href='authentication.html'">Log In</button>
+                        <button class="mobile-signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="section-title">Quests & Challenges</h1>
+            <p>Complete quests, earn points, and unlock rewards to enhance your gardening journey!</p>
+        </div>
+    </section>
+
+    <!-- User Stats Section -->
+    <section class="user-stats">
+        <div class="container">
+            <div class="stat-card points-balance">
+                <div class="stat-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>1,250</h3>
+                    <p>Points Balance</p>
+                </div>
+                <button class="btn" onclick="location.href='rewards-store.html'">Redeem</button>
+            </div>
+
+            <div class="stat-card membership-status">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Basic</h3>
+                    <p>Membership Status</p>
+                </div>
+                <button class="premium-btn">Upgrade to Premium</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quests Container -->
+    <div class="container">
+        <div class="quests-container">
+            <!-- Weekly Quests Section -->
+            <section class="quest-section">
+                <h2 class="quest-section-title">
+                    <i class="fas fa-calendar-week"></i> Weekly Quests
+                </h2>
+
+                <div class="quests-grid">
+                    <!-- Quest 1 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Share a Plant</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 50 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Share a plant cutting or seeds with another community member.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>1/1</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="claim-btn">Claim Reward</button>
+                            <span class="completed-badge">Completed</span>
+                        </div>
+                    </div>
+
+                    <!-- Quest 2 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Helpful Comments</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 30 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Leave 5 helpful comments on community posts.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>3/5</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                    <!-- Quest 3 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Plant Progress</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 40 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Share progress photos of 3 different plants.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>0/3</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="btn">Start Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Monthly Quests Section -->
+            <section class="quest-section">
+                <h2 class="quest-section-title">
+                    <i class="fas fa-calendar-alt"></i> Monthly Quests
+                </h2>
+
+                <div class="quests-grid">
+                    <!-- Quest 1 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Community Helper</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 150 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Help 5 new gardeners with advice or plant sharing.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>2/5</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                    <!-- Quest 2 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-pen-fancy"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Guide Creator</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 200 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Create and share a comprehensive plant care guide.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>0/1</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="btn">Start Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Quest 3 -->
+                    <div class="quest-card">
+                        <div class="quest-badge">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="quest-header">
+                            <div class="quest-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div>
+                                <h3 class="quest-title">Plant Variety</h3>
+                                <div class="quest-reward">
+                                    <i class="fas fa-coins"></i> 100 points
+                                </div>
+                            </div>
+                        </div>
+                        <p class="quest-description">Add 10 different plant species to your profile.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 70%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="quest-actions">
+                            <button class="btn">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h2 class="section-title">Seasonal Leaderboard</h2>
+                <p class="season-info">September 2025 • Ends in 24 days</p>
+            </div>
+
+            <ul class="leaderboard-list">
+                <li class="leaderboard-item">
+                    <div class="rank rank-1">1</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">GreenThumbSarah</div>
+                    </div>
+                    <div class="user-points">3,450 pts</div>
+                </li>
+
+                <li class="leaderboard-item">
+                    <div class="rank rank-2">2</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">PlantWhisperer</div>
+                    </div>
+                    <div class="user-points">2,980 pts</div>
+                </li>
+
+                <li class="leaderboard-item">
+                    <div class="rank rank-3">3</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">JungleJoe</div>
+                    </div>
+                    <div class="user-points">2,750 pts</div>
+                </li>
+
+                <li class="leaderboard-item">
+                    <div class="rank rank-other">4</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">LeafLover</div>
+                    </div>
+                    <div class="user-points">2,420 pts</div>
+                </li>
+
+                <li class="leaderboard-item">
+                    <div class="rank rank-other">5</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">BotanyBen</div>
+                    </div>
+                    <div class="user-points">2,150 pts</div>
+                </li>
+
+                <li class="leaderboard-item">
+                    <div class="rank rank-other">17</div>
+                    <div class="leaderboard-user">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name">You</div>
+                    </div>
+                    <div class="user-points">1,250 pts</div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>WeGrow</h3>
+                    <p>Growing together, one plant at a time. Join our community of plant enthusiasts today!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quests.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get updates on new plants and gardening tips.</p>
+                    <form>
+                        <input type="email" placeholder="Your email address"
+                            style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: var(--radius); border: none;">
+                        <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 WeGrow - Plant Sharing Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function () {
+            mobileMenu.classList.toggle('active');
+
+            // Toggle between hamburger and close icon
+            const icon = hamburger.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideNavbar = event.target.closest('.navbar');
+
+            if (!isClickInsideNavbar && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Claim reward functionality
+        const claimButtons = document.querySelectorAll('.claim-btn');
+        claimButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const questCard = this.closest('.quest-card');
+                const completedBadge = questCard.querySelector('.completed-badge');
+
+                // Show confirmation
+                if (confirm("Claim your reward?")) {
+                    // In a real app, this would connect to a backend
+                    this.style.display = 'none';
+                    completedBadge.textContent = 'Reward Claimed!';
+                    completedBadge.style.backgroundColor = '#4CAF50';
+
+                    // Show success message
+                    alert('Reward claimed successfully! Points have been added to your balance.');
+                }
+            });
+        });
+
+        // Upgrade to premium functionality
+        document.querySelector('.premium-btn').addEventListener('click', function () {
+            alert('Premium membership features: \n- Exclusive quests with higher rewards\n- Early access to new plants\n- Special badges on your profile\n- Ad-free experience\n\nRedirecting to membership page...');
+            // In a real app, this would redirect to a membership page
+        });
+    </script>
+</body>
+
+</html>

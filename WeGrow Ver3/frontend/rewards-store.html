@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards Store - WeGrow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+    /* Base Styles (Consistent with index.html) */
+    :root {
+        --primary: #4CAF50;
+        --primary-dark: #388E3C;
+        --secondary: #8BC34A;
+        --accent: #FFC107;
+        --light: #F1F8E9;
+        --dark: #1B5E20;
+        --gray: #757575;
+        --light-gray: #E0E0E0;
+        --white: #FFFFFF;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f8fdf7;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--dark);
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: var(--primary);
+    }
+
+    button,
+    .btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+
+    button:hover,
+    .btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--dark);
+        font-size: 2rem;
+    }
+
+    .section-title::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 4px;
+        background-color: var(--accent);
+        margin: 10px auto;
+        border-radius: 2px;
+    }
+
+    /* Header & Navigation */
+    header {
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        position: relative;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        z-index: 101;
+    }
+
+    .logo i {
+        margin-right: 10px;
+        color: var(--accent);
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        font-weight: 500;
+    }
+
+    .nav-links a:hover {
+        color: var(--primary);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--primary);
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .login-btn {
+        background: none;
+        color: var(--primary);
+        margin-right: 15px;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        font-weight: 600;
+    }
+
+    .login-btn:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .signup-btn {
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        font-weight: 600;
+    }
+
+    .signup-btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .cart-icon {
+        position: relative;
+        margin-left: 20px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: var(--dark);
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--accent);
+        color: var(--dark);
+        font-size: 0.7rem;
+        font-weight: bold;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hamburger {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    /* Mobile Menu Styles */
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-dark);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 var(--radius) var(--radius);
+        overflow: hidden;
+        z-index: 100;
+    }
+
+    .mobile-menu.active {
+        display: block;
+    }
+
+    .mobile-nav-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-nav-links li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-nav-links a {
+        display: block;
+        padding: 15px 20px;
+        color: var(--white);
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .mobile-auth-buttons {
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-login-btn {
+        background: none;
+        color: var(--white);
+        border: 1px solid var(--white);
+        padding: 10px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .mobile-signup-btn {
+        background-color: var(--accent);
+        color: var(--dark);
+        padding: 10px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        width: 100%;
+        border: none;
+    }
+
+    .mobile-cart-btn {
+        background-color: var(--accent);
+        color: var(--dark);
+        padding: 10px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        width: 100%;
+        border: none;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    /* Points Display */
+    .points-display {
+        background-color: var(--white);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    .points-display h2 {
+        color: var(--dark);
+        margin-bottom: 10px;
+    }
+
+    .points-value {
+        font-size: 2.5rem;
+        color: var(--primary);
+        font-weight: bold;
+    }
+
+    /* Tab Styles */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--light-gray);
+    }
+
+    .tab {
+        padding: 15px 30px;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--gray);
+        transition: all 0.3s;
+        border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+        color: var(--primary-dark);
+        border-bottom: 3px solid var(--primary);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* Filters */
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .filter-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background-color: var(--white);
+        color: var(--dark);
+        border: 1px solid var(--light-gray);
+        padding: 8px 15px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .filter-btn.active {
+        background-color: var(--primary);
+        color: var(--white);
+        border-color: var(--primary);
+    }
+
+    .sort-select {
+        padding: 8px 15px;
+        border-radius: var(--radius);
+        border: 1px solid var(--light-gray);
+        background-color: var(--white);
+    }
+
+    /* Product Grid */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 50px;
+    }
+
+    .product-card {
+        background-color: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-image {
+        height: 200px;
+        background-color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 3rem;
+    }
+
+    .product-content {
+        padding: 20px;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--dark);
+    }
+
+    .product-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .product-price {
+        font-weight: bold;
+        color: var(--primary-dark);
+    }
+
+    .product-points {
+        font-weight: bold;
+        color: var(--accent);
+    }
+
+    .product-seller,
+    .product-rating {
+        font-size: 0.9rem;
+        color: var(--gray);
+        margin-bottom: 5px;
+    }
+
+    .product-rating i {
+        color: var(--accent);
+    }
+
+    .product-description {
+        margin-bottom: 15px;
+        line-height: 1.5;
+        font-size: 0.9rem;
+    }
+
+    .product-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Cart Modal */
+    .cart-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .cart-modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--white);
+        border-radius: var(--radius);
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 30px;
+    }
+
+    .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--light-gray);
+        padding-bottom: 15px;
+    }
+
+    .cart-header h2 {
+        color: var(--dark);
+    }
+
+    .close-cart {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray);
+        transition: color 0.3s;
+    }
+
+    .close-cart:hover {
+        color: var(--primary);
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .cart-item-image {
+        width: 60px;
+        height: 60px;
+        background-color: var(--light);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.5rem;
+        margin-right: 15px;
+    }
+
+    .cart-item-details {
+        flex: 1;
+    }
+
+    .cart-item-title {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+        font-weight: bold;
+        color: var(--primary);
+    }
+
+    .cart-item-points {
+        font-weight: bold;
+        color: var(--accent);
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 15px;
+    }
+
+    .quantity-btn {
+        background-color: var(--light-gray);
+        color: var(--dark);
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .quantity-btn:hover {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .quantity-display {
+        font-weight: 600;
+        min-width: 20px;
+        text-align: center;
+    }
+
+    .remove-item {
+        color: #e74c3c;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .remove-item:hover {
+        color: #c0392b;
+    }
+
+    .cart-summary {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid var(--light-gray);
+        text-align: center;
+    }
+
+    .cart-total {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--dark);
+        margin-bottom: 20px;
+    }
+
+    .checkout-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 40px;
+        color: var(--gray);
+    }
+
+    .empty-cart i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+
+    /* Seller Spotlight */
+    .seller-spotlight {
+        background-color: var(--light);
+        padding: 30px;
+        border-radius: var(--radius);
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .seller-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray);
+        font-size: 2rem;
+    }
+
+    .seller-info h3 {
+        margin-bottom: 10px;
+        color: var(--dark);
+    }
+
+    .seller-stats {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .seller-stat {
+        font-size: 0.9rem;
+        color: var(--gray);
+    }
+
+    .seller-stat span {
+        font-weight: bold;
+        color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+        background-color: var(--dark);
+        color: var(--white);
+        padding: 60px 0 30px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--accent);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: var(--light-gray);
+    }
+
+    .footer-links a:hover {
+        color: var(--accent);
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-icons a {
+        color: var(--white);
+        font-size: 1.2rem;
+    }
+
+    .social-icons a:hover {
+        color: var(--accent);
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--light-gray);
+        font-size: 0.9rem;
+    }
+
+    /* Notification */
+    .notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background-color: var(--primary);
+        color: var(--white);
+        padding: 15px 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        z-index: 1001;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+        transform: translateX(0);
+    }
+
+    .notification i {
+        margin-right: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .nav-links {
+            display: none;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .auth-buttons {
+            display: none;
+        }
+
+        .filters {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .seller-spotlight {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .checkout-buttons {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        .cart-modal-content {
+            width: 95%;
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .tabs {
+            flex-direction: column;
+        }
+
+        .tab {
+            text-align: center;
+        }
+
+        .filter-group {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .filter-btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    WeGrow
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="plant-listings.html">Listings</a></li>
+                    <li><a href="messaging.html">Messages</a></li>
+                    <li><a href="guides.html">Guides</a></li>
+                    <li><a href="quest.html">Quests</a></li>
+                    <li><a href="rewards-store.html" class="active">Store</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+
+                <div class="auth-buttons">
+                    <button class="login-btn" onclick="location.href='authentication.html'">Log In</button>
+                    <button class="signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                    <div class="cart-icon" onclick="openCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </div>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <ul class="mobile-nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quest.html">Quests</a></li>
+                        <li><a href="rewards-store.html" class="active">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                    <div class="mobile-auth-buttons">
+                        <button class="mobile-login-btn" onclick="location.href='authentication.html'">Log In</button>
+                        <button class="mobile-signup-btn" onclick="location.href='authentication.html'">Sign Up</button>
+                        <div class="mobile-cart-btn" onclick="openCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            Cart (<span id="mobile-cart-count">0</span>)
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- Points Display -->
+    <section class="points-display">
+        <div class="container">
+            <h2>Your Points Balance</h2>
+            <div class="points-value">
+                <span id="points-balance">1,250</span>
+                <i class="fas fa-coins" style="color: var(--accent);"></i>
+            </div>
+            <p>Earn more points by sharing plants, completing quests, and helping other gardeners!</p>
+        </div>
+    </section>
+
+    <!-- Tabbed Interface -->
+    <section class="store-tabs">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="rewards">Rewards Store</div>
+                <div class="tab" data-tab="marketplace">Marketplace</div>
+            </div>
+
+            <!-- Rewards Store Tab -->
+            <div class="tab-content active" id="rewards">
+                <div class="filters">
+                    <div class="filter-group">
+                        <button class="filter-btn active">All Items</button>
+                        <button class="filter-btn">Seeds</button>
+                        <button class="filter-btn">Tools</button>
+                        <button class="filter-btn">Planters</button>
+                        <button class="filter-btn">Books</button>
+                        <button class="filter-btn">Decor</button>
+                    </div>
+                    <select class="sort-select">
+                        <option>Sort by: Popularity</option>
+                        <option>Sort by: Rating</option>
+                        <option>Sort by: Price High to Low</option>
+                        <option>Sort by: Price Low to High</option>
+                    </select>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Reward Item 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Heirloom Seed Pack</h3>
+                            <div class="product-info">
+                                <div class="product-points">150 pts</div>
+                            </div>
+                            <p class="product-description">Assorted heirloom vegetable seeds. Non-GMO and organic.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('Heirloom Seed Pack', 150, 'fas fa-seedling')">Redeem
+                                Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Reward Item 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-trowel"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Gardening Tool Set</h3>
+                            <div class="product-info">
+                                <div class="product-points">400 pts</div>
+                            </div>
+                            <p class="product-description">Essential tools for every gardener. Durable and ergonomic.
+                            </p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('Gardening Tool Set', 400, 'fas fa-trowel')">Redeem
+                                Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Reward Item 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Plant Care Guidebook</h3>
+                            <div class="product-info">
+                                <div class="product-points">250 pts</div>
+                            </div>
+                            <p class="product-description">Comprehensive guide to indoor and outdoor plant care.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('Plant Care Guidebook', 250, 'fas fa-book')">Redeem
+                                Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Reward Item 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Ceramic Planter</h3>
+                            <div class="product-info">
+                                <div class="product-points">350 pts</div>
+                            </div>
+                            <p class="product-description">Handcrafted ceramic planter with drainage. 6" diameter.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('Ceramic Planter', 350, 'fas fa-spa')">Redeem Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Reward Item 5 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-fan"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Plant Mister</h3>
+                            <div class="product-info">
+                                <div class="product-points">120 pts</div>
+                            </div>
+                            <p class="product-description">Premium glass mister for tropical plants and herbs.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('Plant Mister', 120, 'fas fa-fan')">Redeem Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Reward Item 6 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">WeGrow T-Shirt</h3>
+                            <div class="product-info">
+                                <div class="product-points">300 pts</div>
+                            </div>
+                            <p class="product-description">Organic cotton t-shirt with plant-themed design.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="redeemWithPoints('WeGrow T-Shirt', 300, 'fas fa-tshirt')">Redeem Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketplace Tab -->
+            <div class="tab-content" id="marketplace">
+                <!-- Seller Spotlight -->
+                <div class="seller-spotlight">
+                    <div class="seller-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="seller-info">
+                        <h3>Featured Seller: GreenThumb Gardens</h3>
+                        <p>Specializing in rare succulents and organic gardening supplies. Family-owned since 1995.</p>
+                        <div class="seller-stats">
+                            <div class="seller-stat"><span>4.9</span> <i class="fas fa-star"></i> (128 reviews)</div>
+                            <div class="seller-stat"><span>42</span> products</div>
+                            <div class="seller-stat"><span>98%</span> positive ratings</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <button class="filter-btn active">All Products</button>
+                        <button class="filter-btn">Plants</button>
+                        <button class="filter-btn">Seeds</button>
+                        <button class="filter-btn">Tools</button>
+                        <button class="filter-btn">Soil & Fertilizer</button>
+                        <button class="filter-btn">Decor</button>
+                    </div>
+                    <select class="sort-select">
+                        <option>Sort by: Popularity</option>
+                        <option>Sort by: Rating</option>
+                        <option>Sort by: Price High to Low</option>
+                        <option>Sort by: Price Low to High</option>
+                    </select>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Marketplace Item 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Monstera Deliciosa</h3>
+                            <div class="product-info">
+                                <div class="product-price">$24.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p class="product-seller">By: GreenThumb Gardens</p>
+                            <p class="product-description">Healthy 6" potted Monstera with beautiful fenestrations.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="addToCart('Monstera Deliciosa', 24.99, 'fas fa-leaf', 'cash', 'GreenThumb Gardens')">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Marketplace Item 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Organic Herb Seed Kit</h3>
+                            <div class="product-info">
+                                <div class="product-price">$18.50</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="product-seller">By: Herb Haven</p>
+                            <p class="product-description">8 varieties of culinary herbs with biodegradable pots.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="addToCart('Organic Herb Seed Kit', 18.50, 'fas fa-seedling', 'cash', 'Herb Haven')">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Marketplace Item 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-toolbox"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Premium Pruning Set</h3>
+                            <div class="product-info">
+                                <div class="product-price">$34.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p class="product-seller">By: GardenGear</p>
+                            <p class="product-description">3-piece stainless steel pruning set with leather holster.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="addToCart('Premium Pruning Set', 34.99, 'fas fa-toolbox', 'cash', 'GardenGear')">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Marketplace Item 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-mortar-pestle"></i>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Organic Fertilizer Pack</h3>
+                            <div class="product-info">
+                                <div class="product-price">$22.75</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="product-seller">By: Nature's Best</p>
+                            <p class="product-description">Slow-release fertilizer for all plant types. 5lb bag.</p>
+                            <button class="btn" style="width: 100%;"
+                                onclick="addToCart('Organic Fertilizer Pack', 22.75, 'fas fa-mortar-pestle', 'cash', 'Nature\'s Best')">Add
+                                to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i> Shopping Cart</h2>
+                <span class="close-cart" onclick="closeCart()">&times;</span>
+            </div>
+
+            <div id="cart-items">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some items from the store to get started!</p>
+                </div>
+            </div>
+
+            <div id="cart-summary" class="cart-summary" style="display: none;">
+                <div class="cart-total">
+                    <div id="cash-total" style="display: none;">Total: $<span id="cash-amount">0.00</span></div>
+                    <div id="points-total" style="display: none;">Total: <span id="points-amount">0</span> points</div>
+                </div>
+
+                <div class="checkout-buttons">
+                    <button id="checkout-cash" class="btn" style="display: none;" onclick="checkoutCash()">
+                        <i class="fas fa-credit-card"></i> Checkout with Card
+                    </button>
+                    <button id="checkout-points" class="btn" style="display: none;" onclick="checkoutPoints()">
+                        <i class="fas fa-coins"></i> Redeem with Points
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Item added to cart!</span>
+    </div>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>WeGrow</h3>
+                    <p>Growing together, one plant at a time. Join our community of plant enthusiasts today!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="plant-listings.html">Listings</a></li>
+                        <li><a href="messaging.html">Messages</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="quests.html">Quests</a></li>
+                        <li><a href="rewards-store.html">Store</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get updates on new plants and gardening tips.</p>
+                    <form>
+                        <input type="email" placeholder="Your email address"
+                            style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: var(--radius); border: none;">
+                        <button type="submit" class="btn" style="width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 WeGrow - Plant Sharing Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let userPoints = 1250;
+        let cart = [];
+        let cartItemId = 0;
+
+        // Mobile menu toggle functionality
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function () {
+            mobileMenu.classList.toggle('active');
+
+            // Toggle between hamburger and close icon
+            const icon = hamburger.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideNavbar = event.target.closest('.navbar');
+
+            if (!isClickInsideNavbar && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show targeted tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === target) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const buttonGroup = this.closest('.filter-group');
+                if (buttonGroup) {
+                    buttonGroup.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                }
+                this.classList.add('active');
+            });
+        });
+
+        // Add to cart
+        function addToCart(name, price, icon, paymentType, seller) {
+            const item = {
+                id: cartItemId++,
+                name,
+                price,
+                icon,
+                paymentType,
+                seller,
+                quantity: 1
+            };
+
+            const existingItem = cart.find(cartItem => cartItem.name === name && cartItem.paymentType === paymentType);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(item);
+            }
+
+            updateCartDisplay();
+            showNotification(`${name} added to cart!`);
+        }
+
+        // Redeem with points
+        function redeemWithPoints(name, points, icon) {
+            if (userPoints < points) {
+                showNotification("Insufficient points!", "error");
+                return;
+            }
+
+            const item = {
+                id: cartItemId++,
+                name,
+                price: points,
+                icon,
+                paymentType: 'points',
+                seller: 'WeGrow Store',
+                quantity: 1
+            };
+
+            const existingItem = cart.find(cartItem => cartItem.name === name && cartItem.paymentType === 'points');
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(item);
+            }
+
+            updateCartDisplay();
+            showNotification(`${name} added to cart!`);
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cart-count');
+            const mobileCartCount = document.getElementById('mobile-cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartSummary = document.getElementById('cart-summary');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            mobileCartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some items from the store to get started!</p>
+                </div>
+            `;
+                cartSummary.style.display = 'none';
+                return;
+            }
+
+            let cartHTML = '';
+            cart.forEach(item => {
+                cartHTML += `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-image">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-seller">${item.seller}</div>
+                        ${item.paymentType === 'cash' ?
+                        `<div class="cart-item-price">${item.price.toFixed(2)} each</div>` :
+                        `<div class="cart-item-points">${item.price} pts each</div>`
+                    }
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <div class="remove-item" onclick="removeFromCart(${item.id})">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            `;
+            });
+
+            cartItems.innerHTML = cartHTML;
+
+            // Totals
+            const cashItems = cart.filter(item => item.paymentType === 'cash');
+            const pointsItems = cart.filter(item => item.paymentType === 'points');
+
+            const cashTotal = cashItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const pointsTotal = pointsItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            const cashTotalDiv = document.getElementById('cash-total');
+            const pointsTotalDiv = document.getElementById('points-total');
+            const checkoutCashBtn = document.getElementById('checkout-cash');
+            const checkoutPointsBtn = document.getElementById('checkout-points');
+
+            if (cashTotal > 0) {
+                cashTotalDiv.style.display = 'block';
+                checkoutCashBtn.style.display = 'inline-block';
+                document.getElementById('cash-amount').textContent = cashTotal.toFixed(2);
+            } else {
+                cashTotalDiv.style.display = 'none';
+                checkoutCashBtn.style.display = 'none';
+            }
+
+            if (pointsTotal > 0) {
+                pointsTotalDiv.style.display = 'block';
+                checkoutPointsBtn.style.display = 'inline-block';
+                document.getElementById('points-amount').textContent = pointsTotal;
+
+                if (pointsTotal > userPoints) {
+                    checkoutPointsBtn.disabled = true;
+                    checkoutPointsBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Insufficient Points';
+                    checkoutPointsBtn.style.backgroundColor = '#e74c3c';
+                } else {
+                    checkoutPointsBtn.disabled = false;
+                    checkoutPointsBtn.innerHTML = '<i class="fas fa-coins"></i> Redeem with Points';
+                    checkoutPointsBtn.style.backgroundColor = 'var(--primary)';
+                }
+            } else {
+                pointsTotalDiv.style.display = 'none';
+                checkoutPointsBtn.style.display = 'none';
+            }
+
+            cartSummary.style.display = 'block';
+        }
+
+        // Change quantity
+        function changeQuantity(itemId, change) {
+            const item = cart.find(cartItem => cartItem.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartDisplay();
+                }
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartDisplay();
+        }
+
+        // Cart modal
+        function openCart() {
+            document.getElementById('cart-modal').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('cart-modal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Checkout with cash
+        function checkoutCash() {
+            const cashItems = cart.filter(item => item.paymentType === 'cash');
+            if (cashItems.length === 0) return;
+
+            const total = cashItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cart = cart.filter(item => item.paymentType !== 'cash');
+            updateCartDisplay();
+
+            showNotification(`Purchase completed! Total: ${total.toFixed(2)}`, "success");
+
+            setTimeout(() => closeCart(), 2000);
+        }
+
+        // Checkout with points
+        function checkoutPoints() {
+            const pointsItems = cart.filter(item => item.paymentType === 'points');
+            if (pointsItems.length === 0) return;
+
+            const totalPoints = pointsItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            if (totalPoints > userPoints) {
+                showNotification("Insufficient points!", "error");
+                return;
+            }
+
+            userPoints -= totalPoints;
+            document.getElementById('points-balance').textContent = userPoints.toLocaleString();
+
+            cart = cart.filter(item => item.paymentType !== 'points');
+            updateCartDisplay();
+
+            showNotification(`Items redeemed! ${totalPoints} points spent.`, "success");
+
+            setTimeout(() => closeCart(), 2000);
+        }
+
+        // Show notification
+        function showNotification(message, type = "success") {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+
+            notificationText.textContent = message;
+            notification.style.backgroundColor = type === "error" ? '#e74c3c' : 'var(--primary)';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        updateCartDisplay();
+    </script>
+
+</body>
+
+</html>
